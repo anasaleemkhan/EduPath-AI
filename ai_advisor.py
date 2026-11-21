@@ -9,8 +9,14 @@ import os
 from typing import Dict, List, Optional
 from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv()
+# Explicitly load .env from current file's directory
+current_dir = os.path.dirname(os.path.abspath(__file__))
+env_file = os.path.join(current_dir, ".env")
+if os.path.exists(env_file):
+    load_dotenv(dotenv_path=env_file)
+parent_env = os.path.join(os.path.dirname(current_dir), ".env")
+if os.path.exists(parent_env):
+    load_dotenv(dotenv_path=parent_env)
 
 try:
     from google import genai
@@ -24,9 +30,23 @@ DEFAULT_MODEL = "gemini-4-hydrogen"
 
 
 def get_api_key(api_key_override: Optional[str] = None) -> Optional[str]:
-    """Retrieve Gemini API key from explicit override, environment, or Streamlit secrets."""
+    """Retrieve Gemini API key from explicit override, .env file directly, environment, or Streamlit secrets."""
     if api_key_override and api_key_override.strip():
         return api_key_override.strip()
+
+    # Direct file read guarantee from .env
+    for candidate in [env_file, parent_env]:
+        if os.path.exists(candidate):
+            try:
+                with open(candidate, "r", encoding="utf-8") as f:
+                    for line in f:
+                        line = line.strip()
+                        if line.startswith("GEMINI_API_KEY=") and not line.startswith("#"):
+                            val = line.split("=", 1)[1].strip().strip('"').strip("'")
+                            if val:
+                                return val
+            except Exception:
+                pass
 
     env_key = os.getenv("GEMINI_API_KEY", "").strip()
     if env_key:

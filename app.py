@@ -157,7 +157,7 @@ st.sidebar.header("🤖 Google Gemini Intelligence")
 
 # Retrieve existing key from .env or session_state
 saved_env_key = ai_advisor.get_api_key() or ""
-if "gemini_api_key" not in st.session_state:
+if not st.session_state.get("gemini_api_key"):
     st.session_state["gemini_api_key"] = saved_env_key
 
 api_key_input = st.sidebar.text_input(
