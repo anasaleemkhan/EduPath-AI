@@ -155,12 +155,22 @@ user_statement = st.sidebar.text_area(
 st.sidebar.markdown("---")
 st.sidebar.header("🤖 Google Gemini Intelligence")
 
+# Retrieve existing key from .env or session_state
+saved_env_key = ai_advisor.get_api_key() or ""
+if "gemini_api_key" not in st.session_state:
+    st.session_state["gemini_api_key"] = saved_env_key
+
 api_key_input = st.sidebar.text_input(
     "Gemini API Key",
-    value="",
+    value=st.session_state["gemini_api_key"],
     type="password",
-    help="Enter your free API key from https://aistudio.google.com/ or set GEMINI_API_KEY environment variable."
+    help="Enter your free API key from https://aistudio.google.com/. You can also save it in .env permanently."
 )
+
+if api_key_input.strip():
+    st.session_state["gemini_api_key"] = api_key_input.strip()
+
+effective_api_key = st.session_state["gemini_api_key"]
 
 gemini_model = st.sidebar.selectbox(
     "Gemini Model Architecture",
@@ -168,8 +178,6 @@ gemini_model = st.sidebar.selectbox(
     index=0,
     help="gemini-4-hydrogen is the recommended frontier reasoning model for academic advising."
 )
-
-effective_api_key = api_key_input if api_key_input.strip() else ai_advisor.get_api_key()
 
 if effective_api_key:
     st.sidebar.success(f"🟢 Gemini Connected: {gemini_model}")
