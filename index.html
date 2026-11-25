@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduPath AI — Intelligent Bachelor Guidance & Career Intelligence Platform</title>
+  <meta name="description" content="AI-driven academic decision-support platform for undergraduate degrees, European university admissions, 6-D competency radar, and career intelligence." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased selection:bg-blue-100 selection:text-blue-900">
+
+  <!-- ========================================================== -->
+  <!-- Top Announcement Bar -->
+  <!-- ========================================================== -->
+  <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-blue-800 text-white text-xs py-2 px-4 text-center font-medium">
+    <span>✨ Powered by NLP TF-IDF Matching, 6-D Competency Profiler & Google Gemini 4 Intelligence</span>
+    <span class="mx-2 hidden sm:inline">&bull;</span>
+    <a href="#scholarships" class="underline hover:text-blue-200 transition hidden sm:inline">Explore Italian €7,000 DSU Scholarships &rarr;</a>
+  </div>
+
+  <!-- ========================================================== -->
+  <!-- Navigation Header -->
+  <!-- ========================================================== -->
+  <header class="sticky top-0 z-50 nav-glass">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- Brand Logo -->
+        <a href="#" class="flex items-center gap-2.5">
+          <span class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xl shadow-md shadow-blue-500/20">🎓</span>
+          <div>
+            <div class="font-extrabold text-lg text-slate-900 tracking-tight leading-none flex items-center gap-1.5">
+              EduPath <span class="text-blue-600">AI</span>
+              <span class="text-[10px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded font-bold uppercase">Enterprise</span>
+            </div>
+            <div class="text-[11px] text-slate-500 font-medium">Academic & Career Decision Intelligence</div>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-600">
+          <a href="#matcher" class="hover:text-blue-600 transition">Degree Matcher</a>
+          <a href="#radar" class="hover:text-blue-600 transition">6-D Radar</a>
+          <a href="#catalog" class="hover:text-blue-600 transition">Programs Directory</a>
+          <a href="#counselor" class="hover:text-blue-600 transition">AI Counselor</a>
+          <a href="#sop" class="hover:text-blue-600 transition">SOP Evaluator</a>
+          <a href="#scholarships" class="hover:text-blue-600 transition">Universities & DSU</a>
+        </nav>
+
+        <!-- CTA & Download -->
+        <div class="hidden sm:flex items-center gap-3">
+          <button id="download-dossier-btn" type="button" class="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white border border-slate-200 hover:border-blue-300 px-3.5 py-2 rounded-lg shadow-sm transition flex items-center gap-1.5">
+            <span>📥</span> Download Dossier (TXT)
+          </button>
+          <a href="#matcher" class="text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md shadow-blue-500/25 transition">
+            Launch Matcher
+          </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden flex items-center">
+          <button id="mobile-menu-btn" type="button" class="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 pt-2 pb-4 space-y-2 text-sm font-semibold text-slate-700">
+      <a href="#matcher" class="block py-2 hover:text-blue-600">Degree Matcher</a>
+      <a href="#radar" class="block py-2 hover:text-blue-600">6-D Radar</a>
+      <a href="#catalog" class="block py-2 hover:text-blue-600">Programs Directory</a>
+      <a href="#counselor" class="block py-2 hover:text-blue-600">AI Counselor</a>
+      <a href="#sop" class="block py-2 hover:text-blue-600">SOP Evaluator</a>
+      <a href="#scholarships" class="block py-2 hover:text-blue-600">Universities & DSU</a>
+      <div class="pt-2 border-t border-slate-100">
+        <a href="#matcher" class="block text-center py-2 bg-blue-600 text-white rounded-lg font-bold">Launch Matcher</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================== -->
+  <!-- Hero Section -->
+  <!-- ========================================================== -->
+  <section class="relative hero-glow pt-12 pb-16 lg:pt-16 lg:pb-20 overflow-hidden border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="max-w-3xl mx-auto text-center">
+        
+        <!-- Feature Pills -->
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-blue-700 text-xs font-bold mb-6 shadow-sm">
+          <span class="flex h-2 w-2 rounded-full bg-blue-600 animate-ping"></span>
+          <span>Next-Gen Academic Decision Support System</span>
+        </div>
+
+        <!-- Main Headline -->
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight sm:leading-tight mb-5">
+          Find Your Ideal Bachelor's Degree with <span class="gradient-text">Precision Intelligence</span>
+        </h1>
+
+        <!-- Subheadline -->
+        <p class="text-base sm:text-lg text-slate-600 mb-8 leading-relaxed">
+          Evaluate your high school subjects, strengths, and unique passions against <strong>24+ international Bachelor degrees</strong>. 
+          Powered by sublinear NLP TF-IDF compatibility, 6-D competency radar mapping, and European admissions intelligence.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-wrap items-center justify-center gap-3 mb-10">
+          <a href="#matcher" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-500/25 transition flex items-center gap-2">
+            <span>⚡ Start Interactive Matcher</span>
+          </a>
+          <a href="#counselor" class="px-5 py-3 bg-white hover:bg-slate-50 text-slate-700 font-bold rounded-xl border border-slate-200 shadow-sm transition flex items-center gap-2">
+            <span>💬 Chat with Dr. Sophia Laurent</span>
+          </a>
+          <a href="#scholarships" class="px-5 py-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold rounded-xl border border-emerald-200 shadow-sm transition flex items-center gap-2">
+            <span>🇮🇹 Italian DSU Scholarships</span>
+          </a>
+        </div>
+
+        <!-- Metric Badges Row -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-left max-w-2xl mx-auto">
+          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm">
+            <div class="text-xl font-extrabold text-blue-600">24+</div>
+            <div class="text-xs text-slate-500 font-medium">Structured Majors</div>
+          </div>
+          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm">
+            <div class="text-xl font-extrabold text-indigo-600">6-D</div>
+            <div class="text-xs text-slate-500 font-medium">Competency Radar</div>
+          </div>
+          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm">
+            <div class="text-xl font-extrabold text-emerald-600">€7,000</div>
+            <div class="text-xs text-slate-500 font-medium">Max DSU Stipend</div>
+          </div>
+          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm">
+            <div class="text-xl font-extrabold text-amber-600">4-Tier</div>
+            <div class="text-xs text-slate-500 font-medium">NLP Composite Scoring</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- Live Interactive Matcher & 6-D Radar Section -->
+  <!-- ========================================================== -->
+  <section id="matcher" class="py-14 lg:py-18">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100">Live Profile Builder</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2 mb-3">Custom Student Profile & Dynamic Matcher</h2>
+        <p class="text-sm sm:text-base text-slate-600">
+          Select standard options or type your custom subjects, skills, and passions. Real-time scores and radar update instantly!
+        </p>
+      </div>
+
+      <!-- Top Live Metrics Strip -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-xs text-slate-500 font-medium uppercase tracking-wider">Top Recommended Degree</div>
+          <div id="metric-top-major" class="text-base sm:text-lg font-bold text-blue-900 truncate mt-1">Computer Science</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-xs text-slate-500 font-medium uppercase tracking-wider">Compatibility Rating</div>
+          <div id="metric-match-score" class="text-base sm:text-lg font-extrabold text-emerald-600 mt-1">94.8%</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-xs text-slate-500 font-medium uppercase tracking-wider">Evaluated Majors</div>
+          <div class="text-base sm:text-lg font-bold text-slate-800 mt-1">24 Academic Programs</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-xs text-slate-500 font-medium uppercase tracking-wider">Active Skills Profile</div>
+          <div id="metric-active-skills" class="text-base sm:text-lg font-bold text-indigo-700 mt-1">3 Attributes</div>
+        </div>
+      </div>
+
+      <!-- Split Layout: Profile Builder (Left) vs Real-Time Results & Radar (Right) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Left: Interactive Profile Builder (5 Columns) -->
+        <div class="lg:col-span-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+          
+          <div class="border-b border-slate-100 pb-3">
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>📋</span> Build Your Academic Profile
+            </h3>
+            <p class="text-xs text-slate-500 mt-0.5">Click tags to toggle or type your unique subjects and skills.</p>
+          </div>
+
+          <!-- Step 1: High School Subjects -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+              1. High School Subjects Studied
+            </label>
+            <div id="subjects-container" class="flex flex-wrap gap-1.5 mb-2.5">
+              <!-- Rendered dynamically -->
+            </div>
+            <div class="flex gap-2">
+              <input id="custom-subject-input" type="text" placeholder="✍️ Type custom subject (e.g. AP Calculus)" class="flex-1 text-xs px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500" />
+              <button id="add-subject-btn" type="button" class="text-xs font-semibold px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition">+ Add</button>
+            </div>
+          </div>
+
+          <!-- Step 2: Passions & Hobbies -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+              2. Areas of Interest & Passions
+            </label>
+            <div id="interests-container" class="flex flex-wrap gap-1.5 mb-2.5">
+              <!-- Rendered dynamically -->
+            </div>
+            <div class="flex gap-2">
+              <input id="custom-interest-input" type="text" placeholder="✍️ Type custom interest (e.g. drone racing)" class="flex-1 text-xs px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500" />
+              <button id="add-interest-btn" type="button" class="text-xs font-semibold px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition">+ Add</button>
+            </div>
+          </div>
+
+          <!-- Step 3: Strengths & Skills -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+              3. Current Strengths & Skills
+            </label>
+            <div id="skills-container" class="flex flex-wrap gap-1.5 mb-2.5">
+              <!-- Rendered dynamically -->
+            </div>
+            <div class="flex gap-2">
+              <input id="custom-skill-input" type="text" placeholder="✍️ Type custom skill (e.g. PyTorch, Figma)" class="flex-1 text-xs px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500" />
+              <button id="add-skill-btn" type="button" class="text-xs font-semibold px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition">+ Add</button>
+            </div>
+          </div>
+
+          <!-- Step 4: Personal Career Statement -->
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="text-xs font-bold uppercase tracking-wider text-slate-700">
+                4. Personal Career Statement
+              </label>
+              <div class="text-[11px] text-blue-600 font-semibold space-x-1">
+                <span>Presets:</span>
+                <button id="sample-prompt-1" type="button" class="hover:underline">AI & Robotics</button>
+                <span>&bull;</span>
+                <button id="sample-prompt-2" type="button" class="hover:underline">FinTech</button>
+              </div>
+            </div>
+            <textarea id="career-statement-input" rows="3" class="w-full text-xs p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500 leading-relaxed text-slate-700"></textarea>
+          </div>
+
+        </div>
+
+        <!-- Right: Recommendations & 6-D Radar Chart (7 Columns) -->
+        <div class="lg:col-span-7 space-y-6">
+          
+          <!-- Radar Chart Box -->
+          <div id="radar" class="radar-wrapper">
+            <div class="flex items-center justify-between mb-2">
+              <div>
+                <h4 class="font-bold text-slate-900 text-base">🕸️ 6-Dimensional Student Competency Radar</h4>
+                <p class="text-xs text-slate-500">Multidimensional evaluation computed from your active profile attributes.</p>
+              </div>
+              <span class="badge-blue text-xs">Real-Time Sync</span>
+            </div>
+            
+            <div class="h-64 sm:h-72 w-full relative">
+              <canvas id="radarChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Top Recommendations List -->
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="font-bold text-slate-900 text-base">🎯 Top Degree Recommendations</h4>
+              <span class="text-xs text-slate-500">Sorted by Composite NLP Fit</span>
+            </div>
+            
+            <div id="top-recommendations-list" class="space-y-3">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- Curriculum Spotlight for Top Major -->
+          <div class="bg-gradient-to-r from-blue-50 to-indigo-50/50 p-5 rounded-2xl border border-blue-200/80">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-blue-700">Coursework Blueprint Spotlight</span>
+              <span class="badge-green text-xs font-bold">#1 Match Preview</span>
+            </div>
+            <h4 id="spotlight-title" class="font-bold text-blue-950 text-base mb-3">Computer Science & Software Architecture</h4>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <div class="text-xs font-bold text-slate-800 mb-1.5">📖 Essential University Courses:</div>
+                <ul id="spotlight-courses" class="space-y-1">
+                  <!-- Rendered dynamically -->
+                </ul>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-slate-800 mb-1.5">🎯 Recommended Foundational Prep:</div>
+                <ul id="spotlight-skills" class="space-y-1">
+                  <!-- Rendered dynamically -->
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- Programs Directory & Search Section -->
+  <!-- ========================================================== -->
+  <section id="catalog" class="py-14 bg-slate-100/70 border-t border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100">Global Knowledge Base</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">Curated Bachelor Programs Directory</h2>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1">Browse all 24 structured international degree programs with curriculum highlights, target institutions, and salary outlooks.</p>
+        </div>
+        <div id="catalog-count" class="text-xs font-bold text-slate-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 whitespace-nowrap self-start md:self-end">
+          Showing 24 of 24 Programs
+        </div>
+      </div>
+
+      <!-- Filters & Search Toolbar -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 mb-6">
+        
+        <!-- Category Filter Pills -->
+        <div class="flex flex-wrap gap-1.5 w-full sm:w-auto">
+          <button type="button" class="catalog-filter-btn active text-xs font-semibold px-3 py-1.5 rounded-lg bg-blue-600 text-white transition shadow-sm" data-category="all">All Disciplines</button>
+          <button type="button" class="catalog-filter-btn text-xs font-semibold px-3 py-1.5 rounded-lg bg-white text-slate-700 hover:bg-slate-50 transition border border-slate-200" data-category="Technology">Technology & AI</button>
+          <button type="button" class="catalog-filter-btn text-xs font-semibold px-3 py-1.5 rounded-lg bg-white text-slate-700 hover:bg-slate-50 transition border border-slate-200" data-category="Engineering">Engineering</button>
+          <button type="button" class="catalog-filter-btn text-xs font-semibold px-3 py-1.5 rounded-lg bg-white text-slate-700 hover:bg-slate-50 transition border border-slate-200" data-category="Natural Sciences">Sciences</button>
+          <button type="button" class="catalog-filter-btn text-xs font-semibold px-3 py-1.5 rounded-lg bg-white text-slate-700 hover:bg-slate-50 transition border border-slate-200" data-category="Economics">Business & Finance</button>
+          <button type="button" class="catalog-filter-btn text-xs font-semibold px-3 py-1.5 rounded-lg bg-white text-slate-700 hover:bg-slate-50 transition border border-slate-200" data-category="Design">Design & Architecture</button>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="w-full sm:w-72">
+          <input id="catalog-search" type="text" placeholder="🔍 Search programs, careers, skills..." class="w-full text-xs px-3.5 py-2 rounded-lg border border-slate-200 focus:outline-none focus:border-blue-500 bg-white" />
+        </div>
+
+      </div>
+
+      <!-- Programs Grid -->
+      <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Rendered dynamically -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- Interactive AI Academic Advisor (Dr. Sophia Laurent) -->
+  <!-- ========================================================== -->
+  <section id="counselor" class="py-14 lg:py-18">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-8">
+        <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100">Intelligent Admissions Counseling</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2 mb-2">Interactive AI Counselor Chat</h2>
+        <p class="text-xs sm:text-sm text-slate-600">
+          Consult <strong>Dr. Sophia Laurent</strong> regarding Italian university entrance tests (TOLC-I), degree comparisons, or full DSU scholarship guidance.
+        </p>
+      </div>
+
+      <!-- Chat Container Card -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden flex flex-col">
+        
+        <!-- Chat Header -->
+        <div class="bg-slate-900 text-white px-5 py-4 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="relative">
+              <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow">SL</div>
+              <span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-500 border-2 border-slate-900"></span>
+            </div>
+            <div>
+              <div class="font-bold text-sm text-white">Dr. Sophia Laurent</div>
+              <div class="text-[11px] text-slate-400">Undergraduate Admissions & Academic Mentor</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="api-key-config-btn" type="button" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold px-2.5 py-1.5 rounded border border-slate-700 transition">
+              🔑 Gemini Key (Optional)
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Prompt Pills Bar -->
+        <div class="bg-slate-50 border-b border-slate-200 p-2.5 flex items-center gap-2 overflow-x-auto text-xs">
+          <span class="text-slate-500 font-semibold text-[11px] whitespace-nowrap pl-1">Ask:</span>
+          <button type="button" class="pill-prompt chat-prompt-pill" data-topic="polimi">🏛️ PoliMi Admission & TOLC-I</button>
+          <button type="button" class="pill-prompt chat-prompt-pill" data-topic="compare_cs_ds_ai">⚖️ Compare CS vs DS vs AI</button>
+          <button type="button" class="pill-prompt chat-prompt-pill" data-topic="dsu_scholarships">💰 How DSU €7,000 Grants Work</button>
+          <button type="button" class="pill-prompt chat-prompt-pill" data-topic="roadmap">🗺️ 4-Year Bachelor Roadmap</button>
+          <button type="button" class="pill-prompt chat-prompt-pill" data-topic="sop_tips">📝 SOP Winning Formula</button>
+        </div>
+
+        <!-- Chat Messages Area -->
+        <div id="chat-messages" class="chat-container">
+          <!-- Messages inserted dynamically -->
+        </div>
+
+        <!-- Chat Input Form -->
+        <div class="p-3 bg-slate-50 border-t border-slate-200 flex items-center gap-2">
+          <input id="chat-input" type="text" placeholder="Ask Dr. Laurent anything about undergraduate programs, admissions, or scholarships..." class="flex-1 text-xs px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 shadow-sm" />
+          <button id="chat-send-btn" type="button" class="text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl shadow-sm transition">
+            Send Message
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- Statement of Purpose (SOP) Evaluator Section -->
+  <!-- ========================================================== -->
+  <section id="sop" class="py-14 bg-slate-100/70 border-t border-slate-200">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-8">
+        <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100">Admissions Rubric Analyzer</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2 mb-2">Statement of Purpose (SOP) Reviewer</h2>
+        <p class="text-xs sm:text-sm text-slate-600">
+          Paste your draft motivation letter or personal essay. The evaluator scores persuasive alignment with your recommended major and suggests actionable enhancements.
+        </p>
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+        
+        <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+          Your Statement of Purpose Draft
+        </label>
+        
+        <textarea id="sop-textarea" rows="6" class="w-full text-xs p-3.5 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 leading-relaxed text-slate-700 mb-3" placeholder="Paste your essay here...">Ever since I wrote my first line of Python code, I have been fascinated by how algorithms can automate complex reasoning. In high school, I gravitated toward advanced mathematics and physics, where I built a small machine learning project to model environmental data. I am applying to study Computer Science because I want to engineer robust, ethical software architectures that bridge theoretical data science with real-world impact. I am eager to contribute to research laboratories and develop distributed systems.</textarea>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-slate-500">Evaluates narrative hook, technical keyword density, and institutional fit.</span>
+          <button id="sop-evaluate-btn" type="button" class="text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 px-5 py-2.5 rounded-xl shadow-md shadow-blue-500/20 transition flex items-center gap-1.5">
+            <span>🚀 Run SOP Evaluation</span>
+          </button>
+        </div>
+
+        <!-- SOP Results Card -->
+        <div id="sop-results-card" class="hidden mt-6 pt-6 border-t border-slate-100">
+          <div id="sop-results-container">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- Target Universities & DSU Scholarships Section -->
+  <!-- ========================================================== -->
+  <section id="scholarships" class="py-14 lg:py-18">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">European Tuition & Welfare</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2 mb-3">Global & Italian University Explorer</h2>
+        <p class="text-xs sm:text-sm text-slate-600">
+          Targeting world-class institutions in Italy and Continental Europe? Learn about admission entrance exams (TOLC-I, SAT) and regional Italian <strong>DSU scholarships</strong> providing full fee exemptions and €7,000 living stipends.
+        </p>
+      </div>
+
+      <!-- DSU Scholarship Callout Banner -->
+      <div class="bg-gradient-to-r from-emerald-800 to-teal-900 text-white rounded-2xl p-6 sm:p-8 mb-10 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <span class="bg-emerald-500/30 text-emerald-200 text-xs font-extrabold uppercase px-3 py-1 rounded-full">Italian Student Welfare Highlight</span>
+          <h3 class="text-xl sm:text-2xl font-extrabold text-white mt-3 mb-2">DSU Regional Scholarship: Study in Italy for Free</h3>
+          <p class="text-xs sm:text-sm text-emerald-100 leading-relaxed mb-4">
+            Under Italian law (<em>Diritto allo Studio Universitario</em>), international undergraduate students with family income (ISEE Parificato) below ~€26,000/year are entitled to:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+            <div class="bg-white/10 backdrop-blur p-3 rounded-lg border border-white/15">
+              <div class="font-bold text-white mb-0.5">🎓 100% Tuition Waiver</div>
+              <div class="text-emerald-100 text-[11px]">Tuition drops to €0 (only ~€156 regional stamp fee)</div>
+            </div>
+            <div class="bg-white/10 backdrop-blur p-3 rounded-lg border border-white/15">
+              <div class="font-bold text-white mb-0.5">💰 Up to €7,000+ Stipend</div>
+              <div class="text-emerald-100 text-[11px]">Direct annual cash deposit into your Italian bank account</div>
+            </div>
+            <div class="bg-white/10 backdrop-blur p-3 rounded-lg border border-white/15">
+              <div class="font-bold text-white mb-0.5">🍽️ Free Dining Hall Meals</div>
+              <div class="text-emerald-100 text-[11px]">One to two daily hot meals at campus cafeterias (Mensa)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Universities Cards Grid -->
+      <div id="universities-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Rendered dynamically -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- Local Python Quickstart & Architecture Strip -->
+  <!-- ========================================================== -->
+  <section class="py-12 bg-slate-900 text-white border-t border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div>
+          <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Multi-Surface Architecture</span>
+          <h3 class="text-2xl font-bold mt-1 mb-3">Run EduPath AI Anywhere</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
+            In addition to this standalone web application, EduPath AI includes a comprehensive Python SaaS dashboard powered by Streamlit and a command-line interface for automated terminal pipelines.
+          </p>
+          <div class="flex flex-wrap gap-2 text-xs font-semibold">
+            <span class="bg-slate-800 text-slate-300 px-3 py-1.5 rounded border border-slate-700">Python 3.9+</span>
+            <span class="bg-slate-800 text-slate-300 px-3 py-1.5 rounded border border-slate-700">Google Gemini 4</span>
+            <span class="bg-slate-800 text-slate-300 px-3 py-1.5 rounded border border-slate-700">Plotly & Chart.js</span>
+            <span class="bg-slate-800 text-slate-300 px-3 py-1.5 rounded border border-slate-700">TF-IDF Vectorization</span>
+          </div>
+        </div>
+        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono text-slate-300 space-y-3">
+          <div>
+            <div class="text-slate-500 mb-1"># 1. Launch Interactive Streamlit SaaS App:</div>
+            <div class="text-emerald-400 bg-black/40 p-2 rounded">streamlit run app.py</div>
+          </div>
+          <div>
+            <div class="text-slate-500 mb-1"># 2. Terminal Command Line Interface (CLI):</div>
+            <div class="text-blue-300 bg-black/40 p-2 rounded">python cli.py --subjects "Math, Physics, CS" --ai</div>
+          </div>
+          <div>
+            <div class="text-slate-500 mb-1"># 3. Double-Click or Serve Webpage:</div>
+            <div class="text-amber-300 bg-black/40 p-2 rounded">python -m http.server 8000</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- Footer -->
+  <!-- ========================================================== -->
+  <footer class="bg-slate-950 text-slate-400 py-10 border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">🎓</span>
+          <span class="font-bold text-white text-sm">EduPath AI</span>
+          <span>&bull; Intelligent Undergraduate Guidance & Career Platform</span>
+        </div>
+        <div class="text-center md:text-right">
+          Developed by <strong class="text-white">Anas Saleem Khan</strong> &bull; Open-source MIT License
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================== -->
+  <!-- Program Details Modal Dialog -->
+  <!-- ========================================================== -->
+  <div id="majorModal" class="modal-overlay">
+    <div class="modal-box relative">
+      <button id="modal-close-btn" type="button" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-xl font-bold p-1">&times;</button>
+      <div id="modal-body">
+        <!-- Content injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/matcher.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -34,6 +34,13 @@ An enterprise-grade academic decision-support platform designed to help prospect
 
 ```text
 EduPath-AI/
+├── index.html          # Interactive Standalone Webpage & Showcase Platform
+├── assets/             # Client-Side CSS, JS Engine & Visual Assets
+│   ├── css/style.css   # Modern Design System & Responsive Layout
+│   └── js/
+│       ├── data.js     # Structured Knowledge Base (24 Programs & Universities)
+│       ├── matcher.js  # Client-side TF-IDF & 6-D Radar Calculation Engine
+│       └── app.js      # Interactive Controller, Chatbot & SOP Reviewer
 ├── app.py              # Interactive Streamlit SaaS Web Dashboard
 ├── cli.py              # Terminal Command Line Interface
 ├── recommender.py      # NLP TF-IDF Matching & 6-D Radar Engine
@@ -74,13 +81,20 @@ export GEMINI_API_KEY="your-gemini-api-key"
 
 ## 💻 Running the Application
 
-### Option A: Launch Interactive Web Dashboard (Recommended)
+### Option A: Open Interactive Webpage (Instant / Zero-Setup)
+Open `index.html` directly in any web browser (Chrome, Edge, Safari, Firefox), or serve locally:
+```bash
+python -m http.server 8000
+```
+*Access in your browser at `http://localhost:8000` or double-click `index.html`.*
+
+### Option B: Launch Interactive Streamlit Web Dashboard
 ```bash
 streamlit run app.py
 ```
 *Access in your browser at `http://localhost:8501`.*
 
-### Option B: Run in Terminal (CLI Mode)
+### Option C: Run in Terminal (CLI Mode)
 ```bash
 python cli.py --subjects "Mathematics, Physics, Computer Science" --skills "Python, C++, Logic" --ai
 ```
